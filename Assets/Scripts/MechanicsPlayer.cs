@@ -9,12 +9,14 @@ public class MechanicsPlayer : MonoBehaviour
     [SerializeField] private int attackDamage = 20;
     [Range(0f, 10f)]
     [SerializeField] private float attackRate = 2f;
-    float nextTimeAttack = 0f;
+    private float nextTimeAttack = 0f;
     private Transform attackPoint;
     private LayerMask enemyes;
     private Animator animator;
+    private GameObject attackPointGameObject;
     //Create object for detection contorls
     private InputSystem_Actions playerControls;
+    private Vector2 movementInput;
     private void Awake()
     {
         //Inizialitize the controls
@@ -26,13 +28,16 @@ public class MechanicsPlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (Time.time>=nextTimeAttack) { 
-            if (playerControls.Player.Attack.triggered) {
+        movementInput = playerControls.Player.Move.ReadValue<Vector2>();
+        if (Time.time >= nextTimeAttack)
+        {
+            if (playerControls.Player.Attack.triggered)
+            {
                 Attack();
-                nextTimeAttack = Time.time+1f/ attackRate;
+                nextTimeAttack = Time.time + 1f / attackRate;
             }
         }
-        
+        AttackPointPosition();
     }
 
     private void Attack()
@@ -46,6 +51,25 @@ public class MechanicsPlayer : MonoBehaviour
         {
             enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
         }
+    }
+
+    private void AttackPointPosition()
+    {
+        //Obtain the position of gameobject children attackposition 
+        Vector3 attackPointPosition = attackPoint.localPosition;
+        //save the position of vectorx because I don´t want change the position only want change the position in left and right
+        float originalX= attackPointPosition.x;
+        //Conditional for change the direction
+        if (movementInput.x > 0)
+        {
+            attackPointPosition.x = Mathf.Abs(originalX); //Right direction
+        }
+        else if (movementInput.x < 0)
+        {
+            attackPointPosition.x = -Mathf.Abs(originalX); //Left direction
+        }
+        //Save new direction
+        attackPoint.localPosition= attackPointPosition;
     }
     private void OnDrawGizmos()
     {

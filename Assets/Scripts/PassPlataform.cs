@@ -8,7 +8,6 @@ public class PassPlataform : MonoBehaviour
 
     private Collider2D collider2D;
     private bool playerOnPlataform;
-    private Animator animator;
 
     private void Awake()
     {
@@ -26,7 +25,10 @@ public class PassPlataform : MonoBehaviour
         if (playerOnPlataform && playerControls.Player.Crouch.triggered)
         {
             collider2D.enabled = false;
+            gameObject.layer = LayerMask.NameToLayer("NotGround");
+            Debug.Log("El layer es: "+gameObject.layer);
             StartCoroutine(EnableCollider());
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().ContinueCrouch();
         }
     }
 
@@ -34,6 +36,7 @@ public class PassPlataform : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         collider2D.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Ground");
     }
 
     private void SetPlayerOnPlataform(Collision2D playerColision,bool value)

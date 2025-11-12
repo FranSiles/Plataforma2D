@@ -37,7 +37,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy died!");
+        //Debug.Log("Enemy died!");
         animator.SetBool("IsDead",true);
         Destroy(gameObject, timeToDisapear);
     }

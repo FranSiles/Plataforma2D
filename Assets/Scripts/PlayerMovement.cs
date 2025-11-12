@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -189,6 +190,27 @@ public class PlayerMovement : MonoBehaviour
             capsuleCollider.size = originalSize;
             capsuleCollider.offset = originalOffset;
         }
+    }
+    public void ContinueCrouch()
+    {
+        Debug.Log("Me he realizado");
+        StartCoroutine(StayCrouchedUntilGrounded());
+    }
+
+    private IEnumerator StayCrouchedUntilGrounded()
+    {
+        Debug.Log("Sigo funcionando");
+        animator.SetBool("IsCrouching", true);
+        Debug.Log("Estado de mi animacion: "+animator.GetBool("IsCrouching"));
+        capsuleCollider.size = crouchSize;
+        capsuleCollider.offset = crouchOffset;
+
+        yield return new WaitForSeconds(1f);
+        Debug.Log("TERMINO EL TIEMPO");
+        // Volver al tamaño original
+        animator.SetBool("IsCrouching", false);
+        capsuleCollider.size = originalSize;
+        capsuleCollider.offset = originalOffset;
     }
 
     private void OnDisable()
