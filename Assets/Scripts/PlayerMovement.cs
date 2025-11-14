@@ -11,6 +11,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [Range (0, 1f)]
     [SerializeField] private float crouch;
+    //Update for jump 
+    [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float jumpBufferTime = 0.2f;
+
+
+    private float coyoteTimeCounter;
+    private float jumpBufferCounter;
+    private float radiusRaycast = 0.5f;
+    private bool forceCrouch = false;
 
     //Inputs
     private Vector2 movementInput;
@@ -84,12 +93,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Vector3 start = playerFeet.transform.position;
-        Vector3 end = start + Vector3.down * 0.5f;
-
-        Gizmos.DrawLine(start, end);
-        Gizmos.DrawSphere(end, 0.05f);
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(playerFeet.transform.position, radiusRaycast);
     }
     /// <summary>
     /// Generate the Physic Jump Movement
@@ -145,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
     /// <returns> grounded state true or false</returns>
     private bool IsGrounded()
     {
-        return Physics2D.Raycast(playerFeet.transform.position, Vector3.down, 0.5f, groundLayer);
+        return Physics2D.OverlapCircle(playerFeet.transform.position, radiusRaycast, groundLayer);
     }
 
     /// <summary>
@@ -153,10 +158,27 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void CalculateJump()
     {
-        if (jumpInput && IsGrounded())
+        if (IsGrounded())
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+        if (jumpInput)
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -=Time.deltaTime;
+        }
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             jumpVector = Vector3.up * jumpForce;
             animator.SetBool("IsJumping", true);
+            coyoteTimeCounter = 0f;
         }
         else if (!IsGrounded())
         {
@@ -178,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Crouch()
     {
-        if (crouchInput>0 && IsGrounded())
+        if (crouchInput>0 && IsGrounded() || forceCrouch)
         {
             animator.SetBool("IsCrouching",true);
             capsuleCollider.size = crouchSize;
@@ -193,24 +215,14 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ContinueCrouch()
     {
-        Debug.Log("Me he realizado");
+        forceCrouch = true;
         StartCoroutine(StayCrouchedUntilGrounded());
     }
 
     private IEnumerator StayCrouchedUntilGrounded()
     {
-        Debug.Log("Sigo funcionando");
-        animator.SetBool("IsCrouching", true);
-        Debug.Log("Estado de mi animacion: "+animator.GetBool("IsCrouching"));
-        capsuleCollider.size = crouchSize;
-        capsuleCollider.offset = crouchOffset;
-
-        yield return new WaitForSeconds(1f);
-        Debug.Log("TERMINO EL TIEMPO");
-        // Volver al tamaño original
-        animator.SetBool("IsCrouching", false);
-        capsuleCollider.size = originalSize;
-        capsuleCollider.offset = originalOffset;
+        yield return new WaitUntil(() => IsGrounded());
+        forceCrouch = false;
     }
 
     private void OnDisable()
