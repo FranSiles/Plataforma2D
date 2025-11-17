@@ -142,4 +142,11 @@ public class EnemyController : MonoBehaviour
         Debug.DrawRay(groundDetection.position, direction * rayLength, color);
         return Physics2D.Raycast(groundDetection.position, direction, rayLength, layer);
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage();
+        }
+    }
 }

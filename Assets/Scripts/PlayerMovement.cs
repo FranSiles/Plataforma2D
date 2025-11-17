@@ -224,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitUntil(() => IsGrounded());
         forceCrouch = false;
     }
+    
 
     private void OnDisable()
     {
