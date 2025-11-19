@@ -6,7 +6,8 @@ public class PassPlataform : MonoBehaviour
 {
     private InputSystem_Actions playerControls;
 
-    private Collider2D collider2D;
+    //Comentario provisional esto ha sido modificado antes ponia Collider2D pero daba un warning por si falla ver esto
+    private Collider2D myCollider;
     private bool playerOnPlataform;
 
     private void Awake()
@@ -17,14 +18,14 @@ public class PassPlataform : MonoBehaviour
 
     private void Start()
     {
-        collider2D = GetComponent<Collider2D>();
+        myCollider = GetComponent<Collider2D>();
 
     }
     private void Update()
     {
         if (playerOnPlataform && playerControls.Player.Crouch.triggered)
         {
-            collider2D.enabled = false;
+            myCollider.enabled = false;
             gameObject.layer = LayerMask.NameToLayer("NotGround");
             Debug.Log("El layer es: "+gameObject.layer);
             StartCoroutine(EnableCollider());
@@ -35,7 +36,7 @@ public class PassPlataform : MonoBehaviour
     private IEnumerator EnableCollider()
     {
         yield return new WaitForSeconds(2f);
-        collider2D.enabled = true;
+        myCollider.enabled = true;
         gameObject.layer = LayerMask.NameToLayer("Ground");
     }
 
