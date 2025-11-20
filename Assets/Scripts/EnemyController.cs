@@ -31,7 +31,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float sinFrecuency;
 
     private float sinCenterY;
+    private bool dead = false;
 
+    public bool Dead { get => dead; set => dead = value; }
 
     private void Awake()
     {
@@ -87,8 +89,10 @@ public class EnemyController : MonoBehaviour
         }
 
         //Move the Crab
-        transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;
-
+        if (!dead)
+        {
+            transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;
+        }
     }
 
     /// <summary>

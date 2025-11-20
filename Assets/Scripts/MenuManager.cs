@@ -17,6 +17,16 @@ public class MenuManager : MonoBehaviour
         //Go to the next Scene (Index Scene)
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void CreditsLevel()
+    {
+        //Go to Credits
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+    }
+    public void MenuLevel()
+    {
+        //Go to Credits
+        SceneManager.LoadScene(GameConstants.MAINMENU_LEVEL);
+    }
 
     public void ExitGame()
     {

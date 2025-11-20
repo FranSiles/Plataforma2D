@@ -75,6 +75,13 @@ public class MechanicsPlayer : MonoBehaviour
     {
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Fall"))
+        {
+            LevelManager.Instance.GameOver();
+        }
+    }
     private void OnDisable()
     {
         //disable the actions when the object is disabled

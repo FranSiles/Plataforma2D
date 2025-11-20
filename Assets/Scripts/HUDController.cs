@@ -22,13 +22,13 @@ public class HUDController : MonoBehaviour
     private void Start()
     {
         healthText.text = playerHealth.Health.ToString("00");
-        //enemyText.text = LevelManager.Instance.RemainingEnemies.ToString("00");
+        enemyText.text = LevelManager.Instance.RemainingenemiesKilled.ToString("00");
     }
 
     private void Update()
     {
         healthText.text = playerHealth.Health.ToString("00");
-        //enemyText.text = LevelManager.Instance.RemainingEnemies.ToString("00");
+        enemyText.text = LevelManager.Instance.RemainingenemiesKilled.ToString("00");
 
         int minutes = (int)LevelManager.Instance.InternalLevelTime / 60;
         int seconds = (int)LevelManager.Instance.InternalLevelTime % 60;

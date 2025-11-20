@@ -14,14 +14,20 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Time disapear")]
     [SerializeField] private float timeToDisapear = 0.6f;
-    
+
+    [Header("Poitns")]
+    [Range(100, 500)]
+    [SerializeField] private int pointsPerEnemy = 250;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private EnemyController enemyController;
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        enemyController = GetComponent<EnemyController>();
     }
 
     public void TakeDamage(int damage)
@@ -38,6 +44,9 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         //Debug.Log("Enemy died!");
+        LevelManager.Instance.EnemyKilled();
+        GameManager.Instance.PlayerPoints += pointsPerEnemy;
+        enemyController.Dead = true;
         animator.SetBool("IsDead",true);
         Destroy(gameObject, timeToDisapear);
     }

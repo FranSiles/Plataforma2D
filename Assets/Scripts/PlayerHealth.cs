@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (Health <= 0)
             {
-                //LevelManager.Instance.GameOver();
+                LevelManager.Instance.GameOver();
             }
 
             StartCoroutine(BlinkSprite(4));

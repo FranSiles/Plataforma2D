@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,13 +21,14 @@ public class LevelManager : MonoBehaviour
     public float InternalLevelTime { get => internalLevelTime; set => internalLevelTime = value; }
 
     //Variables to manage Powerups in the level : total, current and remaining
-    private int totalLevelPowerUps;
+    private int totalEnemies;
+    private int enemiesKilled;
 
-    private int currentPlayerPowerUps;
-    public int CurrentPlayerPowerUps { get => currentPlayerPowerUps; set => currentPlayerPowerUps = value; }
+    /*private int currentPlayerPowerUps;
+    public int CurrentPlayerPowerUps { get => currentPlayerPowerUps; set => currentPlayerPowerUps = value; }*/
 
-    private int remainingPowerUps;
-    public int RemainingPowerUps { get => remainingPowerUps; set => remainingPowerUps = value; }
+    private int remainingenemiesKilled;
+    public int RemainingenemiesKilled { get => remainingenemiesKilled; set => remainingenemiesKilled = value; }
 
     PlayerHealth playerHealth;
 
@@ -55,15 +57,15 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        totalLevelPowerUps = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        totalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        remainingPowerUps = totalLevelPowerUps;
+        remainingenemiesKilled = totalEnemies;
 
     }
 
     private void Update()
     {
-        if (!endLevel && (currentPlayerPowerUps >= totalLevelPowerUps))
+        if (!endLevel && (enemiesKilled >= totalEnemies))
         {
             endLevel = true;
             WinLevel();
@@ -76,7 +78,7 @@ public class LevelManager : MonoBehaviour
         if (internalLevelTime <= 0.9f) GameOver();
 
         //Update of powerups
-        remainingPowerUps = totalLevelPowerUps - currentPlayerPowerUps;
+        remainingenemiesKilled = totalEnemies - enemiesKilled;
 
     }
 
@@ -143,10 +145,9 @@ public class LevelManager : MonoBehaviour
         CheckMaxLevel();
 
         //Initialize Player Points to 0 for new Game
-        GameManager.Instance.PlayerPoints = 0;
-
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.PlayerPoints = 0;
     }
 
     /// <summary>
@@ -218,5 +219,9 @@ public class LevelManager : MonoBehaviour
             //Save first time Player Points
             PlayerPrefs.SetInt(GameConstants.HIGHSCORE_KEY, GameManager.Instance.PlayerPoints);
         }
+    }
+    public void EnemyKilled()
+    {
+        enemiesKilled++;
     }
 }

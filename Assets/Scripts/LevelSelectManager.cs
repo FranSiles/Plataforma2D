@@ -47,4 +47,10 @@ public class LevelSelectManager : MonoBehaviour
         string levelName = "Level" + index;
         SceneManager.LoadScene(levelName);
     }
+
+    public void ButtonBack()
+    {
+        //Go to the Menu
+        SceneManager.LoadScene(GameConstants.MAINMENU_LEVEL);
+    }
 }
