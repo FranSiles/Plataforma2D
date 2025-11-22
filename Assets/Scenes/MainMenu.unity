@@ -673,7 +673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   deathEnemy: {fileID: 1958420424}
   damageAudio: {fileID: 1543887389}
-  attackAudio: {fileID: 0}
+  attackAudio: {fileID: 1933586750}
   damageEnemyAudio: {fileID: 270869587}
 --- !u!1 &922647859
 GameObject:
