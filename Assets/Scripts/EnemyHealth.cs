@@ -19,12 +19,14 @@ public class EnemyHealth : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private EnemyController enemyController;
+    private Collider2D enemycollider;
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         enemyController = GetComponent<EnemyController>();
+        enemycollider = GetComponent<Collider2D>();
     }
 
     public void TakeDamage(int damage)
@@ -35,6 +37,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
+        AudioManager.Instance?.PlayDamageEnemySound();
         StartCoroutine(BlinkSprite(2));
     }
 
@@ -45,11 +48,11 @@ public class EnemyHealth : MonoBehaviour
     {
         //Debug.Log("Enemy died!");
         LevelManager.Instance.EnemyKilled();
-        //TODO Quitar este comentario para los puntos funcionen
-        //GameManager.Instance.PlayerPoints += pointsPerEnemy;
+        GameManager.Instance.PlayerPoints += pointsPerEnemy;
         enemyController.Dead = true;
         animator.SetBool("IsDead",true);
-        //Destroy(gameObject, timeToDisapear);
+        enemycollider.enabled = false;
+        AudioManager.Instance?.PlayDeathSound();
     }
     /// <summary>
     /// Repeats blinkTimes a blink every blinkSeconds 

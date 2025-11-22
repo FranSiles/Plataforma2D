@@ -53,6 +53,8 @@ public class MechanicsPlayer : MonoBehaviour
         {
             enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
         }
+        //play Sound
+        AudioManager.Instance?.PlayAttackSound();
     }
 
     private void AttackPointPosition()

@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
             Health--;
 
             //Play Sound
-            //AudioManager.Instance?.PlayDamageSound();
+            AudioManager.Instance?.PlayDamageSound();
 
             if (Health <= 0)
             {
