@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject gameOverPanel; //reference to the GameOver Panel
     [SerializeField] private GameObject winLevelPanel; //reference to the winLevel Panel
+    [SerializeField] private GameObject pausePanel; //reference to the Pause Panel
+    [SerializeField] private GameObject buttonPause;//reference to the button pause
 
     [Space]
     [Tooltip("Level time in seconds")]
@@ -90,6 +92,8 @@ public class LevelManager : MonoBehaviour
 
         //Activate the Game Over Panel
         gameOverPanel.SetActive(true);
+        buttonPause.SetActive(false);
+
 
         //Pause Game
         Time.timeScale = 0;
@@ -111,6 +115,7 @@ public class LevelManager : MonoBehaviour
 
         //Activate the Panel
         winLevelPanel.SetActive(true);
+        buttonPause.SetActive(false);
 
         //Pause Game
         Time.timeScale = 0;
@@ -148,6 +153,7 @@ public class LevelManager : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         GameManager.Instance.PlayerPoints = 0;
+        buttonPause.SetActive(true);
     }
 
     /// <summary>
@@ -156,9 +162,6 @@ public class LevelManager : MonoBehaviour
     public void NextLevel()
     {
         CheckMaxLevel();
-
-
-
         //total number of levels
         int levelCount = SceneManager.sceneCountInBuildSettings - 1;
         //If there are more levels after this level
@@ -174,6 +177,7 @@ public class LevelManager : MonoBehaviour
             //Initialize Player Points to 0 for new Game
             GameManager.Instance.PlayerPoints = 0;
         }
+        buttonPause.SetActive(true);
     }
 
     /// <summary>
@@ -220,6 +224,19 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.SetInt(GameConstants.HIGHSCORE_KEY, GameManager.Instance.PlayerPoints);
         }
     }
+    public void PuaseLevel()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+        buttonPause.SetActive(false);
+    }
+    public void ContinueLevel()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+        buttonPause.SetActive(true);
+    }
+
     public void EnemyKilled()
     {
         enemiesKilled++;

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MechanicsPlayer : MonoBehaviour
@@ -13,7 +14,7 @@ public class MechanicsPlayer : MonoBehaviour
     private Transform attackPoint;
     private LayerMask enemyes;
     private Animator animator;
-    private GameObject attackPointGameObject;
+    private PlayerHealth playerHealth;
     //Create object for detection contorls
     private InputSystem_Actions playerControls;
     private Vector2 movementInput;
@@ -25,6 +26,7 @@ public class MechanicsPlayer : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         attackPoint = transform.Find("AttackPoint");
         enemyes = LayerMask.GetMask("Enemyes");
+        playerHealth = GetComponent<PlayerHealth>();
     }
     private void Update()
     {
@@ -66,7 +68,7 @@ public class MechanicsPlayer : MonoBehaviour
         }
         else if (movementInput.x < 0)
         {
-            attackPointPosition.x = -Mathf.Abs(originalX); //Left direction
+            attackPointPosition.x = -1.60f; //Left direction
         }
         //Save new direction
         attackPoint.localPosition= attackPointPosition;
@@ -80,6 +82,13 @@ public class MechanicsPlayer : MonoBehaviour
         if (collision.CompareTag("Fall"))
         {
             LevelManager.Instance.GameOver();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Spike"))
+        {
+            playerHealth.TakeDamage();
         }
     }
     private void OnDisable()

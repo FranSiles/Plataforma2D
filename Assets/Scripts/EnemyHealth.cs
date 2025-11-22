@@ -12,9 +12,6 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float blinkSeconds = 0.1f;
     [SerializeField] private Color blinkClolor = Color.red;
 
-    [Header("Time disapear")]
-    [SerializeField] private float timeToDisapear = 0.6f;
-
     [Header("Poitns")]
     [Range(100, 500)]
     [SerializeField] private int pointsPerEnemy = 250;
@@ -41,14 +38,18 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(BlinkSprite(2));
     }
 
+    /// <summary>
+    /// Funciton for edit the dates when enemy dead
+    /// </summary>
     private void Die()
     {
         //Debug.Log("Enemy died!");
         LevelManager.Instance.EnemyKilled();
-        GameManager.Instance.PlayerPoints += pointsPerEnemy;
+        //TODO Quitar este comentario para los puntos funcionen
+        //GameManager.Instance.PlayerPoints += pointsPerEnemy;
         enemyController.Dead = true;
         animator.SetBool("IsDead",true);
-        Destroy(gameObject, timeToDisapear);
+        //Destroy(gameObject, timeToDisapear);
     }
     /// <summary>
     /// Repeats blinkTimes a blink every blinkSeconds 
@@ -67,5 +68,9 @@ public class EnemyHealth : MonoBehaviour
         } while (blinkTimes > 0);
 
         /*canTakeDamage = true;*/
+    }
+    public void DestroyGameObject()
+    {
+        Destroy(gameObject);
     }
 }

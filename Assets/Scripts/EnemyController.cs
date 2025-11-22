@@ -2,9 +2,9 @@ using UnityEngine;
 
 public enum EnemyType
 {
-    Crab,
-    Octopus,
-    Jumper
+    Skeleton,
+    Ghost,
+    GhostParabolic
 }
 public class EnemyController : MonoBehaviour
 {
@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
     {
         groundDetection = transform.GetChild(1);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        layer = LayerMask.GetMask("Ground");
+        layer = LayerMask.GetMask("Ground","Limit");
     }
 
     private void Start()
@@ -61,14 +61,14 @@ public class EnemyController : MonoBehaviour
     {
         switch (enemyType)
         {
-            case EnemyType.Crab:
-                CrabMove();
+            case EnemyType.Skeleton:
+                SkeletonMove();
                 break;
-            case EnemyType.Octopus:
-                OctopusMove();
+            case EnemyType.Ghost:
+                GhostMove();
                 break;
-            case EnemyType.Jumper:
-                JumperMove();
+            case EnemyType.GhostParabolic:
+                GhostParabolic();
                 break;
         }
     }
@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
     /// <summary>
     /// Controls the way the crab moves
     /// </summary>
-    private void CrabMove()
+    private void SkeletonMove()
     {
         //if ground bellow is not detected or the wall is detected , change direction
         if (!GeneralDetection(1.5f, Vector3.down, Color.yellow) || GeneralDetection(0.5f, direction, Color.green))
@@ -98,26 +98,28 @@ public class EnemyController : MonoBehaviour
     /// <summary>
     /// Controls the way the octopus move
     /// </summary>
-    private void OctopusMove()
+    private void GhostMove()
     {
         //detects ceil or floor
         if (GeneralDetection(1f, direction, Color.magenta))
         {
             direction = -direction;
         }
-
-        transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;
-
+        if (!dead)
+        {
+            transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;
+        }
     }
 
     /// <summary>
     /// Controls the Jumper Moves with Sin Frecuency and Sin Amplitude
     /// </summary>
-    private void JumperMove()
+    private void GhostParabolic()
     {
         if (GeneralDetection(1f, direction, Color.magenta))
         {
             direction = -direction;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
         Vector3 enemyPosition = transform.position;
@@ -131,8 +133,11 @@ public class EnemyController : MonoBehaviour
         //y oscillate smoothly in the form of a sinusoidal wave
         enemyPosition.y = sinCenterY + sin;
         enemyPosition.x += direction.x * moveSpeed * Time.deltaTime;
-
-        transform.position = enemyPosition;
+        if (!dead)
+        {
+            transform.position = enemyPosition;
+        }
+        
     }
     /// <summary>
     /// Detects if the Enemy is touching any ground collision
@@ -148,6 +153,7 @@ public class EnemyController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (dead) return;
         if (collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage();

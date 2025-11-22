@@ -70,7 +70,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0064558983, y: -0.23886395}
+  m_Offset: {x: 0.001108408, y: -0.24920219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -80,7 +80,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4002581, y: 1.735959}
+  m_Size: {x: 1.3649592, y: 1.6759523}
   m_EdgeRadius: 0
 --- !u!114 &2776969762962119745
 MonoBehaviour:
@@ -97,7 +97,7 @@ MonoBehaviour:
   health: 100
   blinkSeconds: 0.1
   blinkClolor: {r: 1, g: 0, b: 0, a: 1}
-  timeToDisapear: 0.6
+  pointsPerEnemy: 250
 --- !u!114 &8237800834278490666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyType: 0
   direction: {x: -1, y: 0}
-  moveSpeed: 1.5
+  moveSpeed: 1.2
   sinAmplitude: 0.5
   sinFrecuency: 0.5
 --- !u!1 &2457087415923502124
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6032839071971865243}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GroundDetection
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 769021142962985098}
   - component: {fileID: 4299005706100908976}
   - component: {fileID: 8441678382497107301}
+  - component: {fileID: 7840729840230705866}
   m_Layer: 0
   m_Name: EnemySprite
   m_TagString: Untagged
@@ -259,3 +260,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7840729840230705866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011312827234852386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b69b59da6a0a24abaaf1a7a1166a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDead
