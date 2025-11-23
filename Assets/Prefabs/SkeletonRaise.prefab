@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c23dedea4acc4e4fa99177892acb087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  health: 100
+  health: 140
   blinkSeconds: 0.1
   blinkClolor: {r: 1, g: 0, b: 0, a: 1}
-  pointsPerEnemy: 300
+  pointsPerEnemy: 400

@@ -4,7 +4,7 @@ using UnityEngine;
 public class FallingPlataform : MonoBehaviour
 {
     [Header("Settings for fall and destroy plataform")]
-    [Range(1f,10f)]
+    [Range(1f,20f)]
     [SerializeField] private float fallDelay = 1f;
     [Range(1f,10f)]
     [SerializeField] private float destroyDelay = 2f;

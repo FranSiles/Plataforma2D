@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyType: 2
   direction: {x: -1, y: 0}
-  moveSpeed: 1
+  moveSpeed: 1.4
   sinAmplitude: 0.64
   sinFrecuency: 2.05
 --- !u!114 &1316633386273414101
@@ -240,7 +240,7 @@ MonoBehaviour:
   health: 100
   blinkSeconds: 0.1
   blinkClolor: {r: 1, g: 0, b: 0, a: 1}
-  pointsPerEnemy: 250
+  pointsPerEnemy: 500
 --- !u!1 &3458005642925834152
 GameObject:
   m_ObjectHideFlags: 0

@@ -97,7 +97,7 @@ MonoBehaviour:
   health: 100
   blinkSeconds: 0.1
   blinkClolor: {r: 1, g: 0, b: 0, a: 1}
-  pointsPerEnemy: 250
+  pointsPerEnemy: 200
 --- !u!114 &8237800834278490666
 MonoBehaviour:
   m_ObjectHideFlags: 0

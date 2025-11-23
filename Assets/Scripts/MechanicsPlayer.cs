@@ -36,6 +36,7 @@ public class MechanicsPlayer : MonoBehaviour
             if (playerControls.Player.Attack.triggered)
             {
                 Attack();
+                //TODO ESTO HA CAMBIADO
                 nextTimeAttack = Time.time + 1f / attackRate;
             }
         }
