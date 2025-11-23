@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyType: 2
   direction: {x: -1, y: 0}
-  moveSpeed: 1.4
+  moveSpeed: 2
   sinAmplitude: 0.64
   sinFrecuency: 2.05
 --- !u!114 &1316633386273414101
