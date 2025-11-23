@@ -35,7 +35,7 @@ public class PassPlataform : MonoBehaviour
 
     private IEnumerator EnableCollider()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.7f);
         myCollider.enabled = true;
         gameObject.layer = LayerMask.NameToLayer("Ground");
     }

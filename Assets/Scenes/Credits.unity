@@ -990,7 +990,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Desarrollo y programacion por Francisco Siles
+  m_text: Development and programming by Francisco Siles
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b22223537f09044a86c30a41009693f, type: 2}
   m_sharedMaterial: {fileID: 4472305229345009771, guid: 6b22223537f09044a86c30a41009693f, type: 2}
